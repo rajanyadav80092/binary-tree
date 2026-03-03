@@ -1,8 +1,7 @@
 class Node:
     def __init__(self,key,value):
-        self.value=value
         self.key=key
-        
+        self.value=value
         self.next=None
         self.prev=None
         
@@ -16,14 +15,13 @@ class LRU:
         
         self.head.next=self.tail
         self.tail.prev=self.head
-    
+        
     def _add_to_front(self,node):
         node.next=self.head.next
         self.head.next.prev=node
         node.prev=self.head
         self.head.next=node
         
-    
     def _remove(self,node):
         prev=node.prev
         nxt=node.next
@@ -32,7 +30,7 @@ class LRU:
         
     def get(self,key):
         if key not in self.cache:
-            return "key not found"
+            return -1
         node=self.cache[key]
         self._remove(node)
         self._add_to_front(node)
@@ -53,15 +51,13 @@ class LRU:
     def display(self):
         curr=self.head.next
         while curr != self.tail:
-            print(f"{curr.key} : {curr.value}",end=" ")
+            print(f"{curr.key} :{curr.value}",end=" ")
             curr=curr.next
         print("END")
-
 lru=LRU(3)
 lru.put(1,11)
 lru.put(2,22)
 lru.put(3,33)
-lru.put(1,12)
 lru.get(1)
+lru.put(4,44)
 lru.display()
-        
